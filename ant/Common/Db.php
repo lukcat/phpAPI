@@ -1,13 +1,16 @@
 <?php
 
+// 使用命名空间后，Exception不能正常工作，原因待查
+//namespace Common;
+
 class Db {
 	static private $_instance;
 	static private $_connectSource;
 	private $_dbConfig = array(
 		'host' => '127.0.0.1',
 		'user' => 'root',
-		'password' => '',
-		'database' => 'video',
+		'password' => 'j88j,ui7i97',
+		'database' => 'test',
 	);
 
 	// 单例模式，构造函数声明为私有
@@ -37,9 +40,16 @@ class Db {
 		return self::$_connectSource;
 	}
 }
-/*$connect = Db::getInstance()->connect();
 
-$sql = "select * from video";
+
+/*
+$connect = Db::getInstance()->connect();
+
+$sql = "select * from login";
 $result = mysql_query($sql, $connect);
 echo mysql_num_rows($result);
-var_dump($result);*/
+var_dump($result);
+while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
+	printf ("ID: %s  Name: %s\n", $row["name"], $row["password"]);
+}
+*/

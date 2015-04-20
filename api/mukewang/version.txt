@@ -31,5 +31,18 @@ CREATE TABLE `app` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
+/**
+* version表  版本表
+*/
 
-version表  版本表
+/**
+* login表 注册登录表
+*/
+CREATE TABLE 'LOGIN' (
+	'ID' INT(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'primary key',
+	'NAME' VARCHAR(20) NOT NULL COMMENT 'login name',
+	'PASSWORD' VARCHAR(50) NOT NULL COMMENT 'user password',
+	'PHONE' NVARCAHR(50) COMMENT 'user phone number',
+	'EMAIL' NVARCHAR(150) COMMENT 'user e-mail address',
+	PRIMARY KEY ('ID')
+	) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
