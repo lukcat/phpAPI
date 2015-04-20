@@ -21,11 +21,33 @@ try {
 }
 
 // 用户登录
-$sql = 'select name, password from login where name = ' . '"' . $check->params["username"] . '"';
-$result = mysql_query($sql, $connect);
-
+$find_sql = 'select name, password from login where name = ' . '"' . $check->params["username"] . '"';
+if (!$result = mysql_query($sql, $connect)) {
+	throw new Exception('Mysql query error: ' . mysql_error());
+	// response message to client
+	// TODO
+}
 if ($rows = mysql_fetch_array($result, MYSQL_ASSOC)) {
 	if ($rows['password'] == $check->params['password']) {
 		echo "You have permission to access";
+		// response message to client
+		// TODO
 	}
 }
+else {
+	// response message to client, include token
+	// TODO
+}
+
+// 用户注册
+// 检查用户名是否存在
+function checkName() {
+	$check_sql = 'select * from login where name = ' . '"' . $name . '"';
+	if (!$result = mysql_query($sql, $connect)) {
+	}
+	if ($rows = mysql_fetch_array($result, MYSQL_ASSOC)) {
+	}
+}
+$insert_sql = 'insert into (name, password) values (' . $name . ',' . $password . ')';
+// echo $insert_sql;
+
