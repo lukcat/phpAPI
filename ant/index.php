@@ -20,7 +20,10 @@ try {
 	echo "error ocurrs: " , $e;
 }
 
+//App\Login\Mobile_Login::test();
+
 // 用户登录
+/*
 $find_sql = 'select name, password from login where name = ' . '"' . $check->params["username"] . '"';
 if (!$result = mysql_query($sql, $connect)) {
 	throw new Exception('Mysql query error: ' . mysql_error());
@@ -38,16 +41,37 @@ else {
 	// response message to client, include token
 	// TODO
 }
+*/
 
+/*
 // 用户注册
 // 检查用户名是否存在
-function checkName() {
-	$check_sql = 'select * from login where name = ' . '"' . $name . '"';
-	if (!$result = mysql_query($sql, $connect)) {
+//$check->params['username'] = 'chendq';
+//$check->params['password'] = '123';
+function nameExist($username, $connect) {
+	$check_sql = 'select * from login where name = ' . '"' . $username . '"';
+	//echo $check_sql;
+	if (!$result = mysql_query($check_sql, $connect)) {
+		// response message to client
+		// TODO
+		throw new Exception('Mysql query error: ' . mysql_error());
 	}
 	if ($rows = mysql_fetch_array($result, MYSQL_ASSOC)) {
+		// response message to client
+		// TODO
+		//echo "already exist";
+		return true;
+	}
+	return false;
+}
+
+if (!nameExist($check->params['username'], $connect)) {	// 名字不存在,允许注册
+	$insert_sql = 'insert into login (name, password) values ('. '"' . $check->params['username'] . '"' . ',' . '"' . $check->params['password'] . '"' . ')';
+	echo $insert_sql;
+	if (!$result = mysql_query($insert_sql, $connect)) {
+		// response message to client
+		// TODO
+		throw new Exception('Mysql insert error: ' . mysql_error());
 	}
 }
-$insert_sql = 'insert into (name, password) values (' . $name . ',' . $password . ')';
-// echo $insert_sql;
-
+*/
