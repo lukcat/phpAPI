@@ -5,4 +5,4 @@ spl_autoload_register('\\IMooc\\Loader::autoload');
 //echo '<meta http-equiv="content-type" content="text/html;charset=utf-8">';
 //echo "hello world";
 
-//IMooc\Application::getInstance(__DIR__)->dispatch();
+IMooc\Application::getInstance(__DIR__)->dispatch();

@@ -30,7 +30,9 @@ class Application
 
         $c_low = strtolower($c);
         $c = ucwords($c);
+		//echo $cla = substr($c,0,stripos($c,'.'));
         $class = '\\App\\Controller\\'.$c;
+        //$class = '\\App\\Controller\\'.$cla;
         $obj = new $class($c, $v);
 
         $controller_config = $this->config['controller'];

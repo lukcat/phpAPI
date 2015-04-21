@@ -18,16 +18,17 @@ $check->check();
 try {
 	$connect = Common\Db::getInstance()->connect();
 } catch (Exception $e) {
-	echo "error ocurrs: " , $e;
+	throw new Exception("Database connection error: " . mysql_error());
+	//echo "error ocurrs: " , $e;
 }
 
 // use Mobile_Login class
-$ml = new App\Login\Mobile_Login();
-$ml->varify('chendq', '123', $connect);
+//$ml = new App\Login\Mobile_Login();
+//$ml->varify('chendq', '123', $connect);
 
 // use Mobile_Register class
-//$rg = new App\Register\Mobile_Register();
-//$rg->register('chendeq', '123', $connect);
+$rg = new App\Register\Mobile_Register();
+$rg->register('chendeqing', '123', $connect);
 
 
 //App\Login\Mobile_Login::test();

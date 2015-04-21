@@ -2,32 +2,41 @@
 
 namespace App\Login;
 
-class Mobile_Login {
-	static public function test() {
-		echo "this is Mobile_Login";
-	}
+// 使用别名: use Common\Response 相当于 use Common\Response as Response
+use Common\Response;
+
+class Mobile_Login extends Response {
+
 	public function varify($username, $password, $connect) {
 		// 用户登录
-		//$find_sql = 'select name, password from login where name = ' . '"' . $check->params["username"] . '"';
 		$find_sql = 'select name, password from login where name = ' . '"' . $username . '"';
 		if (!$result = mysql_query($find_sql, $connect)) {
 			throw new Exception('Mysql query error: ' . mysql_error());
 			// response message to client
 			// TODO
+			Response::show(401,'Mobile_Login: query database by name error');
+			
+			return false;
 		}
 		if ($rows = mysql_fetch_array($result, MYSQL_ASSOC)) {
 			//if ($rows['password'] == $check->params['password']) {
 			if ($rows['password'] == $password) {
 				// response message to client
 				// TODO
-				echo "You have permission to access";
+				// 产生token，返回给用户，这部分后期完善
+				Response::show(400,'Mobile_Login: login successful');
+
 				return true;
+			}
+			else {
+				Response::show(404,'Mobile_Login: password error');
+				return false;
 			}
 		}
 		else {
 			// response message to client, include token
 			// TODO
-			echo "This part will retrun a serial of random string as token";
+			Response::show(403,'Mobile_Login: user do not exist');
 			return false;
 		}
 	}

@@ -2,41 +2,54 @@
 
 namespace App\Register;
 
+// 使用别名: use Common\Response 相当于 use Common\Response as Response
+use Common\Response;
+
 class Mobile_Register {
-	function test() {
-		echo "this is Mobile_Register";
-	}
+	
 	function register($username, $password, $connect) {
-		// 用户注册
-		// 检查用户名是否存在
-		//$check->params['username'] = 'chendq';
-		//$check->params['password'] = '123';
-		function nameExist($username, $connect) {
+
+		function nameExist($username, $connect) {	// 检查用户名是否存在, 存在返回true, 不存在返回false
+
 			$check_sql = 'select * from login where name = ' . '"' . $username . '"';
-			//echo $check_sql;
+
 			if (!$result = mysql_query($check_sql, $connect)) {
-				// response message to client
-				// TODO
 				throw new Exception('Mysql query error: ' . mysql_error());
+				// response message to client
+				// 数据库查询失败，返回错误信息，同时退出程序
+				Response::show(501,'Mobile_Register: query database by name error');
+				exit;
 			}
 			if ($rows = mysql_fetch_array($result, MYSQL_ASSOC)) {
-				// response message to client
-				// TODO
-				echo "already exist";
+				// user already exist
 				return true;
 			}
-			echo "do not exist";
+
+			// user do not exist;
 			return false;
 		}
 		
 		if (!nameExist($username, $connect)) {	// 名字不存在,允许注册
 			$insert_sql = 'insert into login (name, password) values ('. '"' . $username . '"' . ',' . '"' . $password . '"' . ')';
-			echo $insert_sql;
-			if (!$result = mysql_query($insert_sql, $connect)) {
+			//echo $insert_sql;
+			if (!$result = mysql_query($insert_sql, $connect)) {	//mysql_query 执行失败
+				throw new Exception('Mysql insert error: ' . mysql_error());
+
 				// response message to client
 				// TODO
-				throw new Exception('Mysql insert error: ' . mysql_error());
+				Response::show(502,'Mobile_Register: inset into database error');
+
+				return false;
+			} else {	//mysql_query 执行成功
+				Response::show(500,'Mobile_Register: register successful');
+
+				return true;
 			}
+		}
+		else {	//名字存在，返回错误信息
+			Response::show(503,'Mobile_Register: user name already exist');
+
+			return false;
 		}
 	}
 }
