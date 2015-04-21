@@ -1,6 +1,6 @@
 <?php
 
-//namespace App\Login;
+namespace App\Login;
 
 class Mobile_Login {
 	static public function test() {

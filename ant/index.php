@@ -3,10 +3,11 @@
 
 define('BASEDIR',__DIR__);
 
-require_once(BASEDIR . '/App/Login/Mobile_Login.php');
-require_once(BASEDIR . '/Common/Response.php');
-require_once(BASEDIR . '/Common/Db.php');
-require_once(BASEDIR . '/Common/CommonAPI.php');
+include BASEDIR . '/Common/Loader.php';
+
+// 使用PSR-0编码规范
+spl_autoload_register('\\Common\\Loader::autoload');
+
 
 // 检查客户端上传参数,数据接口为params数组
 $check = new Common\CommonAPI();
@@ -15,10 +16,19 @@ $check->check();
 // 生成数据库句柄
 //$connect = Common\Db::getInstance()->connect();
 try {
-	$connect = Db::getInstance()->connect();
+	$connect = Common\Db::getInstance()->connect();
 } catch (Exception $e) {
 	echo "error ocurrs: " , $e;
 }
+
+// use Mobile_Login class
+$ml = new App\Login\Mobile_Login();
+$ml->varify('chendq', '123', $connect);
+
+// use Mobile_Register class
+//$rg = new App\Register\Mobile_Register();
+//$rg->register('chendeq', '123', $connect);
+
 
 //App\Login\Mobile_Login::test();
 

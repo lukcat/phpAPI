@@ -1,7 +1,7 @@
 <?php
 
 // 使用命名空间后，Exception不能正常工作，原因待查
-//namespace Common;
+namespace Common;
 
 class Db {
 	static private $_instance;

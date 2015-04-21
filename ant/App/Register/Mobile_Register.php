@@ -1,6 +1,6 @@
 <?php
 
-//namespace App\Register;
+namespace App\Register;
 
 class Mobile_Register {
 	function test() {
@@ -44,17 +44,18 @@ class Mobile_Register {
 /* test
   * 测试用户注册
 */
-/*
+/* 去掉namespace
 require_once('/var/www/html/ant/Common/Db.php');
-
+//require_once(BASEDIR . '/../../Common/Db.php');
 // 生成数据库句柄
 //$connect = Common\Db::getInstance()->connect();
 try {
-	$connect = Db::getInstance()->connect();
+	$connect = Common\Db::getInstance()->connect();
 } catch (Exception $e) {
 	echo "error ocurrs: " , $e;
 }
 
-$ml = new Mobile_Register();
-$ml->register('chendq', '123', $connect);
+//$rg = new App/Register/Mobile_Register();
+$rg = new Mobile_Register();
+$rg->register('chendq', '123', $connect);
 */
