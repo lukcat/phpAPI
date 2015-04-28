@@ -29,7 +29,7 @@ class Mobile_Login extends Response {
 				return true;
 			}
 			else {
-				Response::show(404,'Mobile_Login: password error');
+				Response::show(402,'Mobile_Login: password error');
 				return false;
 			}
 		}

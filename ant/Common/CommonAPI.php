@@ -4,95 +4,35 @@ namespace Common;
 /**
  * 处理接口公共业务
  */
-//require_once('./Common/Response.php');
-//require_once('./Common/Db.php');
-
 
 class CommonAPI {
 	public $params;
 	public $app;
 	public function check() {
-		//$this->params['app_id'] = $appId = isset($_POST['app_id']) ? $_POST['app_id'] : '';
-		//$this->params['version_id'] = $versionId = isset($_POST['version_id']) ? $_POST['version_id'] : '';
-		//$this->params['version_mini'] = $versionMini = isset($_POST['version_mini']) ? $_POST['version_mini'] : '';
-		//$this->params['did'] = $did = isset($_POST['did']) ? $_POST['did'] : '';
-		//$this->params['encrypt_did'] = $encryptDid = isset($_POST['encrypt_did']) ? $_POST['encrypt_did'] : '';
-		
-		//login param
+
+		//////////////// get client data by .GET method ///////////////////
+		//$this->params['username'] = $username = isset($_GET['username']) ? $_GET['username'] : '';
+		//$this->params['password'] = $password = isset($_GET['password']) ? $_GET['password'] : '';
+
+		//$this->params['action'] = $password = isset($_GET['action']) ? $_GET['action'] : '';
+
+		/////////////// get client data by .POST method ///////////////////
 		$this->params['username'] = $username = isset($_POST['username']) ? $_POST['username'] : '';
 		$this->params['password'] = $password = isset($_POST['password']) ? $_POST['password'] : '';
 
-		//echo $username;
-		//echo $password;
-		// More Params needed check
+		$this->params['action'] = $action = isset($_POST['action']) ? $_POST['action'] : '';
 
-		/*
-		if(!is_numeric($appId) || !is_numeric($versionId)) {
-			return Response::show(401, '参数不合法');
-		}
+		//$info = file_get_contents('php://input');
 
-		// 判断APP是否需要加密
-		$this->app = $this->getApp($appId);
-		if(!$this->app) {
-			return Response::show(402, 'app_id不存在');
-		}
-		if($this->app['is_encryption'] && $encryptDid != md5($did . $this->app['key'])) {
-			return Response::show(403, '没有该权限');
-		}*/
-
+		//////////////////// write log ////////////////
+		$file = BASEDIR . '/log/CommonAPI_log.txt';
+		// The new person to add to the file
+		//$info = date('l dS \of F Y h:i:s A') . ":: action->" . $action . ", username->" . $username . ", password->" . $password . "POST->" . implode('',$_SERVER)."\n";
+		$info = ":: action->" . $action . ", username->" . $username . ", password->" . $password . "\n";
+		// Write the contents to the file, 
+		// using the FILE_APPEND flag to append the content to the end of the file
+		// and the LOCK_EX flag to prevent anyone else writing to the file at the same time
+		file_put_contents($file, $info, FILE_APPEND | LOCK_EX);
 	}
-	
-	//public function getUserPWD($loginName) {
-	//	$sql = "select password
-	//			from 'login'
-	//			where name = " . $loginName ."";
-	//	$connect = Db::getInstance()->connect();
-	//	$result = mysql_query($sql, $connect);
-	//	return mysql_fetch_array($result,MYSQL_ASSOC);
-	//}
-
-	//public function getApp($id) {
-	//	$sql = "select *
-	//			from `app`
-	//			where id = " . $id ."
-	//			and status = 1 
-	//			limit 1";
-	//	$connect = Db::getInstance()->connect();
-	//	$result = mysql_query($sql, $connect);
-	//	return mysql_fetch_assoc($result);
-	//}
-	//
-	//public function getversionUpgrade($appId) {
-	//	$sql = "select *
-	//			from `version_upgrade`
-	//			where app_id = " . $appId ."
-	//			and status = 1 
-	//			limit 1";
-	//	$connect = Db::getInstance()->connect();
-	//	$result = mysql_query($sql, $connect);
-	//	return mysql_fetch_assoc($result);
-	//}
-	//
-	///**
-	// * 根据图片大小组装相应图片
-	// * @param string $imageUrl
-	// * @param string $size
-	// */
-	//public function setImage($imageUrl, $size) {
-	//	if(!$imageUrl) {
-	//		return '';
-	//	}
-	//	if(!$size) {
-	//		return $imageUrl;
-	//	}
-	//	
-	//	$type = substr($imageUrl, strrpos($imageUrl, '.'));
-	//	if(!$type) {
-	//		return '';
-	//	}
-	//	$path = substr($imageUrl, 0, strrpos($imageUrl, '.'));
-	//	
-	//	return $path . '_' . $size . $type;
-	//}
 }
 

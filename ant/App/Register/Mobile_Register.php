@@ -6,50 +6,53 @@ namespace App\Register;
 use Common\Response;
 
 class Mobile_Register {
-	
-	function register($username, $password, $connect) {
+	function nameExist($username, $connect) {	// 检查用户名是否存在, 存在返回true, 不存在返回false
+		
+		$check_sql = 'select * from login where name = ' . '"' . $username . '"';
 
-		function nameExist($username, $connect) {	// 检查用户名是否存在, 存在返回true, 不存在返回false
-
-			$check_sql = 'select * from login where name = ' . '"' . $username . '"';
-
-			if (!$result = mysql_query($check_sql, $connect)) {
+		if (!$result = mysql_query($check_sql, $connect)) {
 				throw new Exception('Mysql query error: ' . mysql_error());
 				// response message to client
 				// 数据库查询失败，返回错误信息，同时退出程序
 				Response::show(501,'Mobile_Register: query database by name error');
 				exit;
-			}
-			if ($rows = mysql_fetch_array($result, MYSQL_ASSOC)) {
+		}
+		if ($rows = mysql_fetch_array($result, MYSQL_ASSOC)) {
 				// user already exist
 				return true;
-			}
-
-			// user do not exist;
-			return false;
 		}
-		
-		if (!nameExist($username, $connect)) {	// 名字不存在,允许注册
-			$insert_sql = 'insert into login (name, password) values ('. '"' . $username . '"' . ',' . '"' . $password . '"' . ')';
-			//echo $insert_sql;
-			if (!$result = mysql_query($insert_sql, $connect)) {	//mysql_query 执行失败
-				throw new Exception('Mysql insert error: ' . mysql_error());
 
-				// response message to client
-				// TODO
-				Response::show(502,'Mobile_Register: inset into database error');
+		// user do not exist;
+		return false;
+	}
+	
+	function register($username, $password, $connect) {
+		
+		if ($username != '' && $password != '') {
+			if (!self::nameExist($username, $connect)) {	// 名字不存在,允许注册
+				$insert_sql = 'insert into login (name, password) values ('. '"' . $username . '"' . ',' . '"' . $password . '"' . ')';
+				//echo $insert_sql;
+				if (!$result = mysql_query($insert_sql, $connect)) {	//mysql_query 执行失败
+					throw new Exception('Mysql insert error: ' . mysql_error());
+
+					// response message to client
+					// TODO
+					Response::show(502,'Mobile_Register: inset into database error');
+
+					return false;
+				} else {	//mysql_query 执行成功
+					Response::show(500,'Mobile_Register: register successful');
+
+					return true;
+				}
+			}
+			else {	//名字存在，返回错误信息
+				Response::show(503,'Mobile_Register: user name already exist');
 
 				return false;
-			} else {	//mysql_query 执行成功
-				Response::show(500,'Mobile_Register: register successful');
-
-				return true;
 			}
-		}
-		else {	//名字存在，返回错误信息
-			Response::show(503,'Mobile_Register: user name already exist');
-
-			return false;
+		} else {
+			Response::show('504','Mobile_Register: username or password is empty');
 		}
 	}
 }

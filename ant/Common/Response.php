@@ -57,8 +57,9 @@ class Response {
 			'data' => $data
 		);
 
-		echo json_encode($result);
-		exit;
+		//echo json_encode($result);
+		//exit;
+		exit(json_encode($result));
 	}
 
 	/**
@@ -86,7 +87,8 @@ class Response {
 		$xml .= self::xmlToEncode($result);
 
 		$xml .= "</root>";
-		echo $xml;
+		//echo $xml;
+		exit($xml);
 	}
 
 	public static function xmlToEncode($data) {

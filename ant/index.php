@@ -8,10 +8,14 @@ include BASEDIR . '/Common/Loader.php';
 // 使用PSR-0编码规范
 spl_autoload_register('\\Common\\Loader::autoload');
 
-
 // 检查客户端上传参数,数据接口为params数组
 $check = new Common\CommonAPI();
 $check->check();
+
+$username = $check->params['username'];
+$password = $check->params['password'];
+
+$action = $check->params['action'];
 
 // 生成数据库句柄
 //$connect = Common\Db::getInstance()->connect();
@@ -22,14 +26,26 @@ try {
 	//echo "error ocurrs: " , $e;
 }
 
-// use Mobile_Login class
-//$ml = new App\Login\Mobile_Login();
-//$ml->varify('chendq', '123', $connect);
+if ($action == 'Login') {	// for user login
+	// use Mobile_Login class
+	$ml = new App\Login\Mobile_Login();
+	$ml->varify($username, $password, $connect);
+}
+elseif ($action == 'Register') {	// for user register
+	// use Mobile_Register class
+	$rg = new App\Register\Mobile_Register();
+	$rg->register($username, $password, $connect);
+}
+else {
+	Common\Response::show(601,"no action");
+}
 
-// use Mobile_Register class
-$rg = new App\Register\Mobile_Register();
-$rg->register('chendeqing', '123', $connect);
 
+//$rg->register('chendeqing11', '123', $connect);
+
+//use Graphics class
+//$gs = new App\Graphics\Mobile_Graphics();
+//$gs->test();
 
 //App\Login\Mobile_Login::test();
 
