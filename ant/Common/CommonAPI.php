@@ -10,17 +10,25 @@ class CommonAPI {
 	public $app;
 	public function check() {
 
-		//////////////// get client data by .GET method ///////////////////
-		//$this->params['username'] = $username = isset($_GET['username']) ? $_GET['username'] : '';
-		//$this->params['password'] = $password = isset($_GET['password']) ? $_GET['password'] : '';
-
-		//$this->params['action'] = $password = isset($_GET['action']) ? $_GET['action'] : '';
-
-		/////////////// get client data by .POST method ///////////////////
+		///////////////////////////////////////////////////////////
+		/////////////// user login and register ///////////////////
 		$this->params['username'] = $username = isset($_POST['username']) ? $_POST['username'] : '';
 		$this->params['password'] = $password = isset($_POST['password']) ? $_POST['password'] : '';
 
 		$this->params['action'] = $action = isset($_POST['action']) ? $_POST['action'] : '';
+
+		///////////////////////////////////////////////////////////////////////
+		////////////////////// for single file upload ////////////////////////
+		$fileInfo = $_FILES;
+		$id = 'myfile';
+		$myfile = $fileInfo[$id];
+		$this->params['filename'] = $filename = isset($myfile['name'] ? $myfile['name'] : '';
+		$this->params['filetmpname'] = $filetmpname = isset($myfile['tmp_name'] ? $myfile['tmp_name'] : '';
+		$this->params['filetype'] = $filetype = isset($myfile['type'] ? $myfile['type'] : '';
+		$this->params['filesize'] = $filesize = isset($myfile['size'] ? $myfile['size'] : '';
+		$this->params['fileerror'] = $fileerror = isset($myfile['error'] ? $myfile['error'] : '';
+
+
 
 		//$info = file_get_contents('php://input');
 

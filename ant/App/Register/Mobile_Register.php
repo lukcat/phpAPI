@@ -15,7 +15,6 @@ class Mobile_Register {
 				// response message to client
 				// 数据库查询失败，返回错误信息，同时退出程序
 				Response::show(501,'Mobile_Register: query database by name error');
-				exit;
 		}
 		if ($rows = mysql_fetch_array($result, MYSQL_ASSOC)) {
 				// user already exist
