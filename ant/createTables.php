@@ -24,7 +24,7 @@ createFileTable($connect);
 //////////////////////////////////////////////////////////////
 /////////////////////create table file //////////////////////
 function createFileTable($conn) {
-	$field = 'imageid char(36) not null primary key, name char(20), type char(20), size int, path char(20), time date, description text, userid char(36)';
+	$field = 'imageid char(50) not null primary key, localname varchar(512), originname varchar(512),type varchar(50), size int, path varchar(512), time timestamp not null default now(), description text, userid char(50)';
 	$sql = 'create table file (' . $field . ')';
 	if (!$result = mysql_query($sql, $conn)) {
 		throw new Exception('Mysql query error: ' . mysql_error());

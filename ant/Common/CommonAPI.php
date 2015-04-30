@@ -1,4 +1,5 @@
 <?php
+// by chendq 2015/4/21
 
 namespace Common;
 /**
@@ -14,7 +15,6 @@ class CommonAPI {
 		/////////////// user login and register ///////////////////
 		$this->params['username'] = $username = isset($_POST['username']) ? $_POST['username'] : '';
 		$this->params['password'] = $password = isset($_POST['password']) ? $_POST['password'] : '';
-
 		$this->params['action'] = $action = isset($_POST['action']) ? $_POST['action'] : '';
 
 		///////////////////////////////////////////////////////////////////////
@@ -22,11 +22,13 @@ class CommonAPI {
 		$fileInfo = $_FILES;
 		$id = 'myfile';
 		$myfile = $fileInfo[$id];
-		$this->params['filename'] = $filename = isset($myfile['name'] ? $myfile['name'] : '';
-		$this->params['filetmpname'] = $filetmpname = isset($myfile['tmp_name'] ? $myfile['tmp_name'] : '';
-		$this->params['filetype'] = $filetype = isset($myfile['type'] ? $myfile['type'] : '';
-		$this->params['filesize'] = $filesize = isset($myfile['size'] ? $myfile['size'] : '';
-		$this->params['fileerror'] = $fileerror = isset($myfile['error'] ? $myfile['error'] : '';
+		$this->params['filename'] = $filename = isset($myfile['name']) ? $myfile['name'] : '';
+		$this->params['filetmpname'] = $filetmpname = isset($myfile['tmp_name']) ? $myfile['tmp_name'] : '';
+		$this->params['filetype'] = $filetype = isset($myfile['type']) ? $myfile['type'] : '';
+		$this->params['filesize'] = $filesize = isset($myfile['size']) ? $myfile['size'] : '';
+		$this->params['fileerror'] = $fileerror = isset($myfile['error']) ? $myfile['error'] : '';
+
+		//var_dump($this->params);
 
 
 

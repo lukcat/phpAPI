@@ -1,4 +1,5 @@
 <?php
+// by chendq 2015/4/25
 
 namespace App\Register;
 

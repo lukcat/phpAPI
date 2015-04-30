@@ -1,36 +1,62 @@
 <?php 
+// by chendq 2015/4/29
 
 namespace App\Upload;
 
+
+// params: CommonAPI接收数据
+// savePath：指定存储路径
+// connect: 数据库链接句柄
+
 // 使用别名: use Common\Response 相当于 use Common\Response as Response
-use Common\Response;
-//header('content-type:text/html;charset=utf-8');
+use Common\Response as Response;
 
 class File_Upload {
 
-	function saveFile($params, $savePath, $connect) {
-		/////// get file information from parameters 
-		$username = $params['username'];
-		$filename = $params['filename'];
-		$filetmpname = $params['filetmpname'];
-		$filetype = $params['filetype'];
-		$filesize = $params['filesize'];
+	public function saveFile($params, $savePath, $connect) {
+		//echo 'enter saveFile';
+		//Reponse::show(002, 'test saveFile function');
+		var_dump($params);
+
+		/////// formate data of params for insert
+		$username ='"'.$params['username'].'"';
+		$originname = '"'.$params['filename'].'"';
+		$filetmpname = '"'.$params['filetmpname'].'"';
+		$filetype = '"'.$params['filetype'].'"';
+		$filesize = '"'.$params['filesize'].'"';
+		$description = '"'."this is description".'"';
+		// ensure imageid and file local name is unique
+		//$loacalname = $imageid = '"'.$params['username']. date('H:i:s') . rand(). $params['filename'] . '"';
+		$imageid = '"'.$params['username']. date('Y/m/d-H:i:s') . 'R' . rand(). $params['filename'] . '"';
+		$localname = '"'.$params['username']. date('YmdHis') . 'R' . rand(). $params['filename'] . '"';
+		$filepath = '"' . $savePath . $params['filename'] . '"';
+
 		$fileerror = $params['fileerror'];
 
-		// formate save path 
+		// formate save path, check the varidation of filepath
 		// TODO
 
-		// generate imageid
-		$imageid = $username . $filename . date('H:i:s') . rand();
+		//echo "imageid is: " . $imageid;
+		//echo "path is : " . $savePath.$filename;
+		//echo "fileTmpName is: ".$fileTmpName;
 
-		$insert_sql = 'insert into file (imageid, name, type, path, size) values (' . $imageid . ',' . $filename . ',' . $filetype . ',' . $savePath . ',' . $filesize . ')';
+		$field = "imageid, originname, localname, type, path, size, description";
+		$value = $imageid . ',' . $originname . ',' . $localname . ',' . $filetype . ',' . $filepath . ',' . $filesize . ',' .$description;
+
+		// query sentance
+		//$insert_sql = 'insert into file (imageid, name, type, path, size) values (' . $imageid . ',' . $filename . ',' . $filetype . ',' . $filepath . ',' . $filesize . ')';
+		$insert_sql = 'insert into file ('.$field.') values ('.$value.')';
+		//echo "insertsql is: ".$insert_sql;
+		$localSavePath = $savePath . trim($localname,'"');
+		echo "local path is: " . $localSavePath;
+
 		if ($fileerror == UPLOAD_ERR_OK) {		// file upload ok
-			if(move_uploaded_file($fileTmpName,$savePath.$filename)) {
+			if(move_uploaded_file($params['filetmpname'], $localSavePath)) {
 				if (!$result = mysql_query($insert_sql, $connect)) {
-					throw new Exception('Mysql query error: ' . mysql_error());
+					//throw new Exception('Mysql query error: ' . mysql_error());
 					// response message to client
 					// query error occur
-					Response::show(501,'Mobile_Register: query database by name error');
+					Response::show(501,'File_Upload: query database by name error');
 				}
 				// upload OK
 				Response::show(700,'File uploaded successful');
@@ -68,11 +94,4 @@ class File_Upload {
 		}
 	}
 }
-
-// 1. move file 
-//move_uploaded_file($fileTmpName,'./uploads/'.$filename);
-
-//2. copy file
-//copy($fileTmpName, './uploads/'.$filename);
-
 
