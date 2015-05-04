@@ -53,14 +53,15 @@ switch($action) {
 		//Response::show(001,"file upload test");
 		// use App\Upload\File_Upload class
 		$ul = new File_Upload();
-
 		// spacify file storage path
 		$savePath = BASEDIR . "/uploads/";
-		echo "BASEDIR: ".BASEDIR;
+		//echo "BASEDIR: ".BASEDIR;
 
 		// save file and insert file information into database
-		$ul->saveFile($check->params, $savePath, $connect);
-		echo "after saveFile";
+		//$ul->saveFile($check->params, $savePath, $connect);
+		//$ul->uploadFile($check->params, $connect, $savePath);
+		$ul->uploadFile($check->params, $connect);
+		//echo "after saveFile";
 
 		break;
 	default:

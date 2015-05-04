@@ -10,18 +10,24 @@ class CommonAPI {
 	public $params;
 	public $app;
 	public function check() {
+		///////////////////////////////////////////////////////////
+		/////////////// user action ///////////////////
+		$this->params['action'] = $action = isset($_POST['action']) ? $_POST['action'] : '';
 
 		///////////////////////////////////////////////////////////
 		/////////////// user login and register ///////////////////
 		$this->params['username'] = $username = isset($_POST['username']) ? $_POST['username'] : '';
 		$this->params['password'] = $password = isset($_POST['password']) ? $_POST['password'] : '';
-		$this->params['action'] = $action = isset($_POST['action']) ? $_POST['action'] : '';
+		$this->params['token'] = $token = isset($_POST['token']) ? $_POST['token'] : '';
 
 		///////////////////////////////////////////////////////////////////////
 		////////////////////// for single file upload ////////////////////////
 		$fileInfo = $_FILES;
-		$id = 'myfile';
+		$id = key($fileInfo); // in test, $id = 'myfile'
+		//echo "id is: " . ;
+		//var_dump($id);
 		$myfile = $fileInfo[$id];
+		//var_dump($myfile);
 		$this->params['filename'] = $filename = isset($myfile['name']) ? $myfile['name'] : '';
 		$this->params['filetmpname'] = $filetmpname = isset($myfile['tmp_name']) ? $myfile['tmp_name'] : '';
 		$this->params['filetype'] = $filetype = isset($myfile['type']) ? $myfile['type'] : '';
