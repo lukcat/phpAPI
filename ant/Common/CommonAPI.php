@@ -17,7 +17,8 @@ class CommonAPI {
 		///////////////////////////////////////////////////////////
 		/////////////// user login and register ///////////////////
 		$this->params['username'] = $username = isset($_POST['username']) ? $_POST['username'] : '';
-		$this->params['password'] = $password = isset($_POST['password']) ? $_POST['password'] : '';
+		// use md5 and sha1 to encrypt user password
+		$this->params['password'] = $password = isset($_POST['password']) ? sha1(md5($_POST['password'],true)) : '';
 		$this->params['token'] = $token = isset($_POST['token']) ? $_POST['token'] : '';
 
 		///////////////////////////////////////////////////////////////////////
