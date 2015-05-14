@@ -4,7 +4,7 @@
 namespace App\Register;
 
 // 使用别名: use Common\Response 相当于 use Common\Response as Response
-use Common\Response;
+use Common\Response as Response;
 
 class Mobile_Register {
 	function nameExist($username, $connect) {	// 检查用户名是否存在, 存在返回true, 不存在返回false

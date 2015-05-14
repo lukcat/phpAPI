@@ -34,17 +34,34 @@
  * $rc->cacheData($actionSetex, $key2, $value2, $time);
  */
 
+namespace Common;
+
 /**
- * @host: Redis主机地址
- * @port: Redis服务端口
- * @action: Redis操作类型
- * @key: 数据主键
- * @value: 数据值
- * @time: 数据过期时间
+ * @host: Redis host address
+ * @port: Redis host port
+ * @action: Redis operation type
+ * @key: data key
+ * @value: data value
+ * @time: data available time
  */
 
-class redisCache {
+class RedisCache {
+
+	//private function __construct() {
+	//	// Singleton pattern
+	//	// TODO
+	//}
+	
 	private $_redis;
+
+	//static private $_instance;
+
+	//static public function getInstance() {
+	//	if (!(self::$_instance instanceof self)) {
+	//		self::$_instance = new self();
+	//	}
+	//	return self::$_instance;
+	//}
 
 	public function connectRedis($host, $port) {
 		$this->_redis = new Redis();

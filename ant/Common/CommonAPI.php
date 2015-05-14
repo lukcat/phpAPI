@@ -22,9 +22,14 @@ class CommonAPI {
 		$this->params['token'] = $token = isset($_POST['token']) ? $_POST['token'] : '';
 
 		///////////////////////////////////////////////////////////////////////
+		////////////////////// for vehicle inquiry////////////////////////
+		$this->params['vehicleid'] = $vehicleid = isset($_POST['vehicleid']) ? $_POST['vehicleid'] : '';
+
+		///////////////////////////////////////////////////////////////////////
 		////////////////////// for single file upload ////////////////////////
 		$fileInfo = $_FILES;
 		$id = key($fileInfo); // in test, $id = 'myfile'
+		//Response::show(1,$id);
 		//echo "id is: " . ;
 		//var_dump($id);
 		$myfile = $fileInfo[$id];
@@ -34,6 +39,11 @@ class CommonAPI {
 		$this->params['filetype'] = $filetype = isset($myfile['type']) ? $myfile['type'] : '';
 		$this->params['filesize'] = $filesize = isset($myfile['size']) ? $myfile['size'] : '';
 		$this->params['fileerror'] = $fileerror = isset($myfile['error']) ? $myfile['error'] : '';
+
+
+		$test_value = 'filename: '.$filename.' '.'filetmpname'.$filetmpname.' '.'filetype'.$filetype.' '.'filesize'.$filesize. ' '.$fileerror;
+		//Response::show(4,$test_value);
+		//echo $test_value;
 
 		//var_dump($this->params);
 
@@ -45,7 +55,9 @@ class CommonAPI {
 		$file = BASEDIR . '/log/CommonAPI_log.txt';
 		// The new person to add to the file
 		//$info = date('l dS \of F Y h:i:s A') . ":: action->" . $action . ", username->" . $username . ", password->" . $password . "POST->" . implode('',$_SERVER)."\n";
-		$info = ":: action->" . $action . ", username->" . $username . ", password->" . $password . "\n";
+		//$info = ":: action->" . $action . ", username->" . $username . ", password->" . $password . "\n";
+		//$info = $vehicleid . ' ' . $action;
+		$info = $test_value;
 		// Write the contents to the file, 
 		// using the FILE_APPEND flag to append the content to the end of the file
 		// and the LOCK_EX flag to prevent anyone else writing to the file at the same time
