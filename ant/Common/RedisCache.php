@@ -1,40 +1,10 @@
 <?php
-// By chendq 2015-4-15
-
-/**
- * Description: A simple function to cache data
- * 
- * Usage: new file <testRedisCache.php>
- * <?php 
- * 
- * require_once('./redisCache.php');
- * 
- * //$rc = new redisCache('127.0.0.1', 637900);
- * $rc = new redisCache();
- * $host = '127.0.0.1';
- * $port = 6379;
- * 
- * if (!$rc->connectRedis($host, $port)) {
- * 	echo "connect error";
- * }
- * 
- * $actionSet = 'set';
- * $actionGet = 'get';
- * $actionDel= 'del';
- * $actionSetex = 'setex';
- * $key = 'deqing';
- * $key2 = 'dq';
- * $value = 100;
- * $value2 = 200;
- * $time = 10;
- * 
- * $rc->cacheData($actionSet, $key, $value);
- * var_dump($rc->cacheData($actionGet, $key));
- * $rc->cacheData($actionDel, $key);
- * $rc->cacheData($actionSetex, $key2, $value2, $time);
+/*
+ * RedisCache.php
+ * Description: Operate redis database and use it to cache data
+ *  Created on: 2015/4/15
+ *      Author: Chen Deqing
  */
-
-namespace Common;
 
 /**
  * @host: Redis host address
@@ -44,6 +14,8 @@ namespace Common;
  * @value: data value
  * @time: data available time
  */
+
+namespace Common;
 
 class RedisCache {
 
@@ -89,3 +61,35 @@ class RedisCache {
 	}
 }
 
+/**
+ * Description: A simple function to cache data
+ * 
+ * Usage: new file <testRedisCache.php>
+ * <?php 
+ * 
+ * require_once('./redisCache.php');
+ * 
+ * //$rc = new redisCache('127.0.0.1', 637900);
+ * $rc = new redisCache();
+ * $host = '127.0.0.1';
+ * $port = 6379;
+ * 
+ * if (!$rc->connectRedis($host, $port)) {
+ * 	echo "connect error";
+ * }
+ * 
+ * $actionSet = 'set';
+ * $actionGet = 'get';
+ * $actionDel= 'del';
+ * $actionSetex = 'setex';
+ * $key = 'deqing';
+ * $key2 = 'dq';
+ * $value = 100;
+ * $value2 = 200;
+ * $time = 10;
+ * 
+ * $rc->cacheData($actionSet, $key, $value);
+ * var_dump($rc->cacheData($actionGet, $key));
+ * $rc->cacheData($actionDel, $key);
+ * $rc->cacheData($actionSetex, $key2, $value2, $time);
+ */

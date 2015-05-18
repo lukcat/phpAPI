@@ -1,19 +1,24 @@
 <?php
+/*
+ * Mobile_Login.php
+ * Description: This module is mainly for mobile user login
+ *  Created on: 2015/4/10
+ *      Author: Chen Deqing
+ */
 
 namespace App\Login;
 
-// 使用别名: use Common\Response 相当于 use Common\Response as Response
+// use Common\Response equals to Common\Response as Response
 use Common\Response;
 
 class Mobile_Login extends Response {
 
 	public function varify($username, $password, $connect) {
-		// 用户登录
+		// query database for spacific user
 		$find_sql = 'select name, password from login where name = ' . '"' . $username . '"';
 		if (!$result = mysql_query($find_sql, $connect)) {
 			throw new Exception('Mysql query error: ' . mysql_error());
 			// response message to client
-			// TODO
 			Response::show(401,'Mobile_Login: query database by name error');
 			
 			return false;

@@ -1,21 +1,26 @@
 <?php
-// By Chendq 2015/4/29
+/*
+ * CreateTables.php
+ * Description: This is program main entrance, according to user action and calling relevant module
+ *  Created on: 2015/4/29
+ *      Author: Chen Deqing
+ */
+
 
 define('BASEDIR',__DIR__);
 
 include BASEDIR . '/Common/Loader.php';
 
-// 使用PSR-0编码规范
+// use PSR-0 coding standard
 spl_autoload_register('\\Common\\Loader::autoload');
 
 
-// 生成数据库句柄
+// generate database handle
 //$connect = Common\Db::getInstance()->connect();
 try {
 	$connect = Common\Db::getInstance()->connect();
 } catch (Exception $e) {
 	throw new Exception("Database connection error: " . mysql_error());
-	//echo "error ocurrs: " , $e;
 }
 
 // create file

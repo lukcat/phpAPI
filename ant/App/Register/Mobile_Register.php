@@ -1,5 +1,10 @@
 <?php
-// by chendq 2015/4/25
+/*
+ * Mobile_Registr.php
+ * Description: This is program main entrance, according to user action and calling relevant module
+ *  Created on: 2015/4/10
+ *      Author: Chen Deqing
+ */
 
 namespace App\Register;
 

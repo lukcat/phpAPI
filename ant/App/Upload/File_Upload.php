@@ -1,10 +1,10 @@
 <?php 
-// by chendq 2015/4/29
-
-namespace App\Upload;
-
-// 使用别名: use Common\Response 相当于 use Common\Response as Response
-use Common\Response as Response;
+/*
+ * File_Upload.php
+ * Description: process single file uploads
+ *  Created on: 2015/4/29
+ *      Author: Chen Deqing
+ */
 
 /**
  * @params: CommonAPI接收数据
@@ -15,55 +15,59 @@ use Common\Response as Response;
  * @maxSize: 自定义最大文件大小，与php.ini中的设置同时起作用
  */
 
+namespace App\Upload;
+
+// use Common\Response equals to use Common\Response as Response
+use Common\Response as Response;
+
 class File_Upload {
-	//　处理文件错误信息
-	//array(bmp,jpg,tiff,gif,pcx,tga,exif,fpx,svg,psd,cdr,pcd,dxf,ufo,eps,ai,raw)
+	// process error 
 	protected function processErr($params, $checkFlag=false, $allowExt=array('bmp','jpg','tiff','gif','pcx','tga','exif','fpx','svg','psd','cdr','pcd','dxf','ufo','eps','ai','raw'), $maxSize) {
 
-		if (is_string($params['fileerror'])) {	// 数据接收模块Common\CommonAPI中默认值是空string
+		// default value of fileerror is empty string 
+		if (is_string($params['fileerror'])) {	
 			Response::show(714, 'No file uploaded');
 		}
 		if($params['fileerror'] > 0 ) {
 			 switch ($params['fileerror']) {
 				 case 1:
-					// 上传的文件超过了 php.ini 中 upload_max_filesize 选项限制的值
-					Response::show(701, 'uploaded file exceeds upload_max_filesize whick defined in php.ini');
+					// Uploaded file exceeds upload_max_filesize whick defined in php.ini
+					Response::show(701, 'Uploaded file exceeds upload_max_filesize whick defined in php.ini');
 						 break;
 				 case 2:
-					// 上传文件的大小超过了 HTML 表单中 MAX_FILE_SIZE 选项指定的值
-					Response::show(702, 'uploaded file exceeds MAX_FILE_SIZE which defined in client');
+					// Uploaded file excessds MAX_FILE_SIZE which defined in client
+					Response::show(702, 'Uploaded file exceeds MAX_FILE_SIZE which defined in client');
 						 break;
 				 case 3:
-					// 文件只有部分被上传
-					Response::show(703, 'file was partially uploaded');
+					// File was partially uploaded
+					Response::show(703, 'File was partially uploaded');
 					break;
 				 case 4:
-					//没有文件被上传
+					// No file uploaded
 					Response::show(704, 'No file uploaded');
 					break;
 				 case 6:
-					// 找不到临时文件夹
-					Response::show(706, 'temporary folder can not be find');
+					// Temporary folder can not be found
+					Response::show(706, 'temporary folder can not be found');
 					break;
 				 case 7:
-					// 文件写入失败'
-					Response::show(707, 'file write failure');
+					// File write failure
+					Response::show(707, 'File write failure');
 					break;
 			 }
 		} else {
-
-			// 检测文件大小是否合法
+			// check file size
 			if ($params['filesize'] > $maxSize) {
 				Response::show(708, 'file uploaded is too large');
 			}
 
-			// 检查文件扩展名是否合法
+			// check filename 
 			$ext = strtolower(pathinfo($params['filename'],PATHINFO_EXTENSION));
 			if (!in_array($ext, $allowExt)) {
 				Response::show(709, 'illegal file type');
 			}
 
-			// 检查文件是否为图片
+			// check file type 
 			if ($checkFlag) {
 				if (!getimagesize($params['filetmpname'])) {
 					Response::show(710, 'File is not image');
@@ -75,26 +79,16 @@ class File_Upload {
 
 	public function uploadFile($params, $connect, $savePath='uploads', $checkFlag=true, $allowExt=array('jpg','jpeg','png','gif','bmp'), $maxSize=52428800) {
 
-		//Response::show(1,"enter uploadFile");
-
-		// 处理错误信息
-		//var_dump($params);
-
-		// 去除目录尾部的'/'
-		//$trimElement = '/';
-		//$savePath = rtrim($savePath,$trimElement);
-
-		// 检查目录是否存在
+		// check whether storage folder is exist
 		if (!file_exists($savePath)) {
 			mkdir($savePath,0777,true);
 			chmod($savePath,0777);
 		}
 
-		// 错误检测
+		// check error
 		$this->processErr($params, $checkFlag, $allowExt, $maxSize);
-		//Response::show(2,"enter uploadFile");
 
-		/////// formate data of params for insert
+		// formate data of params for insert
 		$username ='"'.$params['username'].'"';
 		$originname = '"'.$params['filename'].'"';
 		$filetmpname = '"'.$params['filetmpname'].'"';
@@ -117,19 +111,13 @@ class File_Upload {
 		$field = "imageid, originname, localname, type, path, size, description";
 		$value = $imageid . ',' . $originname . ',' . $localname . ',' . $filetype . ',' . $filepath . ',' . $filesize . ',' .$description;
 
-		//echo "value is: ".$value;
-
 		// query sentance
 		$insert_sql = 'insert into file ('.$field.') values ('.$value.')';
 
-		// 
+		// generate destination
 		$destination = $realSavePath . '/' . trim($localname,'"');
-		//if ($fileerror == UPLOAD_ERR_OK) {		// file upload ok
-		//Response::show(5,$params['filetmpname']);
 		if(move_uploaded_file($params['filetmpname'], $destination)) {
 			if (!$result = mysql_query($insert_sql, $connect)) {
-				//throw new Exception('Mysql query error: ' . mysql_error());
-				// response message to client
 				// query error occur
 				Response::show(501,'File_Upload: query database by name error');
 			}

@@ -1,6 +1,11 @@
 <?php
+/*
+ * Db.php
+ * Description: use Singleton pattern to connect database, and returns a handle to control database
+ *  Created on: 2015/4/20
+ *      Author: Chen Deqing
+ */
 
-// 使用命名空间后，Exception不能正常工作，原因待查
 namespace Common;
 
 class Db {

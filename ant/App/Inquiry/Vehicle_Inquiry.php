@@ -1,4 +1,11 @@
 <?php
+/*
+ * Vehicle_Inquiry.php
+ * Description: Inquiry vehicle information by license plate number, return json data to clients
+ *  Created on: 2015/5/10
+ *      Author: Chen Deqing
+ */
+
 
 namespace App\Inquiry;
 

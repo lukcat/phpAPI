@@ -1,4 +1,10 @@
 <?php
+/*
+ * Response.php
+ * Description: This module is mainly used to response data to client
+ *  Created on: 2015/4/15
+ *      Author: Chen Deqing
+ */
 
 namespace Common;
 
