@@ -13,6 +13,7 @@ use App\Login\Mobile_Login as Mobile_Login;
 use App\Register\Mobile_Register as Mobile_Register;
 use App\Upload\File_Upload as File_Upload;
 use App\Inquiry\Vehicle_Inquiry as Vehicle_Inquiry;
+use App\Graphics\Mobile_Graphics as Mobile_Graphics;
 use Common\Response as Response;
 
 // global variable BASEDIR
