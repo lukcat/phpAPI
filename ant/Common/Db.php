@@ -15,8 +15,8 @@ class Db {
 		'host' => '127.0.0.1',
 		'user' => 'root',
 		'password' => 'j88j,ui7i97',
-		//'database' => 'test',
-		'database' => 'ant',
+		'database' => 'test',
+		//'database' => 'ant',
 	);
 
 	// 单例模式，构造函数声明为私有
